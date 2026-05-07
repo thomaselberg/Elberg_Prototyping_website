@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Projects | Elberg Prototyping</title>
+    <!-- Modern, premium typography via Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background dynamic elements -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    
+    <!-- Glassmorphism Navigation -->
+    <header class="glass-nav">
+        <div class="logo">
+            <a href="index.html">
+                <img src="ELBERG_PROTOTYPING_Simplified_Logo_smallest.png" alt="Elberg Prototyping" class="logo-img">
+            </a>
+        </div>
+        <nav class="desktop-nav">
+            <a href="index.html#home" class="nav-link">Home</a>
+            <a href="projects.html" class="nav-link active">Our own projects</a>
+            <a href="index.html#about" class="nav-link">About us</a>
+            <a href="index.html#contact" class="cta-button">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero documentation-hero">
+            <h1 class="hero-title">OUR <span class="gradient-text">PROJECTS</span></h1>
+            <p class="hero-subtitle">Detailed documentation, technical architectures, and customer validation metrics.</p>
+        </section>
+
+        <!-- Projects Grid -->
+        <section class="projects-section glass-card">
+            <h2>Current Prototypes</h2>
+            <p>A closer look at what we are building and how we measure success.</p>
+            
+            <div class="projects-grid">
+                <!-- Mock Project 1 -->
+                <article class="project-card">
+                    <div class="project-image">
+                        <!-- Placeholder image related to electronics -->
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Hardware Circuit">
+                    </div>
+                    <div class="project-info">
+                        <h3>Force Plate Tracker V3</h3>
+                        <p class="tech-stack">ESP32 • Python • Load Cells</p>
+                        <p>High precision wireless force plate tailored for athletic performance monitoring. Currently in pilot testing with local clubs to validate usability constraints.</p>
+                        <a href="#" class="read-more">Read Documentation &rarr;</a>
+                    </div>
+                </article>
+
+                <!-- Mock Project 2 -->
+                <article class="project-card">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1527443154391-507e9dc6c5cc?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="CAD Render">
+                    </div>
+                    <div class="project-info">
+                        <h3>Voice-Activated Smart Lamp</h3>
+                        <p class="tech-stack">ESP-S3 • DSP Audio • Fusion 360</p>
+                        <p>Exploring multi-modal alarm control. Pivot from standard buttons to natural voice input based on user interviews.</p>
+                        <a href="#" class="read-more">Read Documentation &rarr;</a>
+                    </div>
+                </article>
+
+                <!-- Mock Project 3 -->
+                <article class="project-card">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1555664424-783a15bdf2eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Embedded Systems">
+                    </div>
+                    <div class="project-info">
+                        <h3>Laser Tag Registry</h3>
+                        <p class="tech-stack">ESP-NOW • React UI • RTOS</p>
+                        <p>A dynamic master-slave hardware system for scalable outdoor play. Demonstrating robust peer-to-peer embedded communication.</p>
+                        <a href="#" class="read-more">Read Documentation &rarr;</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="glass-footer">
+        <p>&copy; 2026 Elberg Prototyping. Built for Validated Learning.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

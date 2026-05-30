@@ -50,13 +50,17 @@
             <h3>V1</h3>
             <p>After the two-pistol prototype worked, i assembled 8 more and added a master esp32 to periodically ask each pistol for its HitData to assemble a single true scoreboard based on only the IR hits. This means lost wifi packets never becomes a problem. If one pistol is outside range from the master, then the scoreboard is simply not updated with that pistols information until it returns in range. In this way the IR is always the truth. HP is ALWAYS lost regardless of the hitconfirmation reaching the shooter or not. The first 10 pistol set utilizes hardcoded master/slave MAC-addresses for simplified code. While it successfully demonstrated the core mechanics of IR hit detection and ESP-NOW communication, it is not a scalable solution as replacing one device means all other devices must be reprogrammed.</p>
             <p>Additionally, i took the first set to the laser tag venue VRGame in Nørresundby. The owner was very impressed with the prototype and expressed that the added shock circuit is a unique and valuable proposition. The owner also explained the hurdles they have with their existing system such as manually turning all pistols on and connecting them - providing valuable insight into the important "everyday" convenience perspective of the venue owner. The owner told me that, in order for him to consider a system such as mine, it had to consist of physically larger and more robust pistols. The users are not very caring of the hardware and thus it needs to be able to take a beating.</p>
-            <div class="image-grid">
-                <img src="own_project_documentation/lab1_taser_game_v1.jpg" alt="Taser Game V1 lab">
-                <img src="own_project_documentation/lab2_taser_game_v1.jpg" alt="Taser Game V1 lab">
-                <img src="own_project_documentation/lab3_taser_game_v1.jpg" alt="Taser Game V1 lab">
-                <img src="own_project_documentation/lab4_taser_game_v1.jpg" alt="Taser Game V1 lab">
-                <img src="own_project_documentation/lab5_taser_game_v1.jpg" alt="Taser Game V1 lab">
-                <img src="own_project_documentation/taser_game_v1_box.jpg" alt="Taser Game V1 enclosure">
+            <div class="gallery">
+                <div class="gallery-track">
+                    <img src="own_project_documentation/lab1_taser_game_v1.jpg" alt="Taser Game V1 lab" class="active">
+                    <img src="own_project_documentation/lab2_taser_game_v1.jpg" alt="Taser Game V1 lab">
+                    <img src="own_project_documentation/lab3_taser_game_v1.jpg" alt="Taser Game V1 lab">
+                    <img src="own_project_documentation/lab4_taser_game_v1.jpg" alt="Taser Game V1 lab">
+                    <img src="own_project_documentation/lab5_taser_game_v1.jpg" alt="Taser Game V1 lab">
+                    <img src="own_project_documentation/taser_game_v1_box.jpg" alt="Taser Game V1 enclosure">
+                </div>
+                <button class="gallery-arrow gallery-prev">&#8592;</button>
+                <button class="gallery-arrow gallery-next">&#8594;</button>
             </div>
 
             <h3>V2</h3>
@@ -68,9 +72,13 @@
                 <li>Switching to larger toy pistol allowing all components to fit securely inside the housing.</li>
                 <li>Switching from flimsy cord to comfortable and durable watch bands for the shock circuit.</li>
             </ul>
-            <div class="image-grid two-col">
-                <img src="own_project_documentation/taser_game_lab_v2.jpg" alt="Taser Game V2 lab">
-                <img src="own_project_documentation/osc_shock.png" alt="Oscilloscope screenshot of shock circuit">
+            <div class="gallery">
+                <div class="gallery-track">
+                    <img src="own_project_documentation/taser_game_lab_v2.jpg" alt="Taser Game V2 lab" class="active">
+                    <img src="own_project_documentation/osc_shock.png" alt="Oscilloscope — shock circuit">
+                </div>
+                <button class="gallery-arrow gallery-prev">&#8592;</button>
+                <button class="gallery-arrow gallery-next">&#8594;</button>
             </div>
         </section>
 
@@ -97,8 +105,12 @@
                 <li><strong>Power:</strong> 18650 Li-ion cell utilizing the ESP32's inbuilt charging circuit. Power bank for the base station.</li>
                 <li><strong>Display:</strong> The 1.47" TFT display provides information in real time.</li>
             </ul>
-            <div class="image-grid single">
-                <img src="own_project_documentation/PCB_taser_game.png" alt="Taser Game custom PCB">
+            <div class="gallery">
+                <div class="gallery-track">
+                    <img src="own_project_documentation/PCB_taser_game.png" alt="Taser Game custom PCB" class="active">
+                </div>
+                <button class="gallery-arrow gallery-prev">&#8592;</button>
+                <button class="gallery-arrow gallery-next">&#8594;</button>
             </div>
 
             <h3>Embedded Software — RTOS</h3>
@@ -113,9 +125,13 @@
                 <li><strong>Interface:</strong> A tablet connects to the Master base station's web server.</li>
                 <li><strong>Features:</strong> Provides an easy user interface for game configuration (game modes, team count, duration). During the game, it displays a real-time global scoreboard showing Player Kills, Player Damage, and Team Scores. After the game it shows the final scoreboard and highlights the top performers.</li>
             </ul>
-            <div class="image-grid two-col ui-screenshots">
-                <img src="own_project_documentation/taser_game_UI.png" alt="Scoreboard UI">
-                <img src="own_project_documentation/taser_game_UI_team_deathmatch.png" alt="Team Deathmatch mode UI">
+            <div class="gallery">
+                <div class="gallery-track">
+                    <img src="own_project_documentation/taser_game_UI.png" alt="Scoreboard UI" class="active">
+                    <img src="own_project_documentation/taser_game_UI_team_deathmatch.png" alt="Team Deathmatch mode UI">
+                </div>
+                <button class="gallery-arrow gallery-prev">&#8592;</button>
+                <button class="gallery-arrow gallery-next">&#8594;</button>
             </div>
         </section>
 
@@ -147,7 +163,7 @@
     </main>
 
     <footer class="glass-footer">
-        <p>&copy; 2026 Elberg Prototyping. Built for Validated Learning.</p>
+        <p>&copy; 2026 Elberg Prototyping</p>
         <div class="footer-meta">
             <span>CVR: 45085295</span>
             <span>Aalborg, Denmark</span>

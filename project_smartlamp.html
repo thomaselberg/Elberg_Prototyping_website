@@ -57,11 +57,15 @@
             <h3>V1 — Halogen driving PoC</h3>
             <p>The original proof-of-concept featured a classic ESP32, a 1.14" Tenstar T-Display, a mechanical analog joystick, and two series-connected 12V halogen bulbs.</p>
             <p><em>Feedback:</em> The user interface was intuitive, but incorporating the joystick in a clean design was troublesome. PCB got very hot due to radiation from halogen bulbs and high switching losses in the mosfet without using gate driver.</p>
-            <div class="image-grid">
-                <img src="own_project_documentation/very_early_halogen_lamp_idea.jpg" alt="V1 early concept">
-                <img src="own_project_documentation/lamp_plastic_case_LED+halogen.jpg" alt="V1 plastic enclosure">
-                <img src="own_project_documentation/thermal_camera_halogen_lamp.jpg" alt="Thermal camera — halogen lamp">
-                <img src="own_project_documentation/thermal_cam_PCB_underside.jpg" alt="Thermal camera — PCB underside">
+            <div class="gallery">
+                <div class="gallery-track">
+                    <img src="own_project_documentation/very_early_halogen_lamp_idea.jpg" alt="V1 early concept" class="active">
+                    <img src="own_project_documentation/lamp_plastic_case_LED+halogen.jpg" alt="V1 plastic enclosure">
+                    <img src="own_project_documentation/thermal_camera_halogen_lamp.jpg" alt="Thermal camera — halogen lamp">
+                    <img src="own_project_documentation/thermal_cam_PCB_underside.jpg" alt="Thermal camera — PCB underside">
+                </div>
+                <button class="gallery-arrow gallery-prev">&#8592;</button>
+                <button class="gallery-arrow gallery-next">&#8594;</button>
             </div>
 
             <h3>V2 — Voice Input and premium design</h3>
@@ -69,9 +73,13 @@
             <p>Initially, we implemented a local keyword spotting neural network (using Edge Impulse) running locally on the ESP32-S3. This leverages the fact that the sentence "set alarm" is identical in many languages, meaning a single wake word detection algorithm could be used for many languages. Although elegant, this means the device would always be "listening", which is not great in a bedroom. Instead, the microphone is only waken up by a double press which enabled a 5s recording that is sent to the Gemini API along with a prompt to return a certain format.</p>
             <p>Alarm configurations are saved to the ESP32's non-volatile storage to save user input across power ups, reducing friction. The enclosure transitioned from simple 3d printed case to a wood base with a thick brushed aluminum top plate acting as a passive heatsink.</p>
             <p><em>These are technically not v2, but rather v1.5 as this was a test for plastic with wooden "tape" around it. Functionally v2, but without paying up for wooden boxes and metal lid. Real v2 pictures coming soon.</em></p>
-            <div class="image-grid two-col">
-                <img src="own_project_documentation/lab1_lamp.jpg" alt="Smart Lamp V1.5 lab">
-                <img src="own_project_documentation/lab2_lamp.jpg" alt="Smart Lamp V1.5 build">
+            <div class="gallery">
+                <div class="gallery-track">
+                    <img src="own_project_documentation/lab1_lamp.jpg" alt="Smart Lamp V1.5 lab" class="active">
+                    <img src="own_project_documentation/lab2_lamp.jpg" alt="Smart Lamp V1.5 build">
+                </div>
+                <button class="gallery-arrow gallery-prev">&#8592;</button>
+                <button class="gallery-arrow gallery-next">&#8594;</button>
             </div>
         </section>
 
@@ -86,10 +94,14 @@
                 <li><strong>Audio Capture:</strong> Knowles SPH0645LM4H-B omnidirectional I2S MEMS microphone.</li>
                 <li><strong>Custom PCB design:</strong> using EasyEDA and assembly by JLCPCB.</li>
             </ul>
-            <div class="image-grid">
-                <img src="own_project_documentation/PCB_lamp_v1.png" alt="PCB V1">
-                <img src="own_project_documentation/PCB_lamp_v1.5.png" alt="PCB V1.5">
-                <img src="own_project_documentation/PCB_lamp_v2.png" alt="PCB V2">
+            <div class="gallery">
+                <div class="gallery-track">
+                    <img src="own_project_documentation/PCB_lamp_v1.png" alt="PCB V1" class="active">
+                    <img src="own_project_documentation/PCB_lamp_v1.5.png" alt="PCB V1.5">
+                    <img src="own_project_documentation/PCB_lamp_v2.png" alt="PCB V2">
+                </div>
+                <button class="gallery-arrow gallery-prev">&#8592;</button>
+                <button class="gallery-arrow gallery-next">&#8594;</button>
             </div>
 
             <h3>DSP Audio Pipeline</h3>
@@ -118,7 +130,7 @@
     </main>
 
     <footer class="glass-footer">
-        <p>&copy; 2026 Elberg Prototyping. Built for Validated Learning.</p>
+        <p>&copy; 2026 Elberg Prototyping</p>
         <div class="footer-meta">
             <span>CVR: 45085295</span>
             <span>Aalborg, Denmark</span>

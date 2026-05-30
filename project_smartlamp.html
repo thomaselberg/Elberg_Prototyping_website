@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Lamp | Elberg Prototyping</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <header class="glass-nav">
+        <div class="logo">
+            <a href="index.html">
+                <img src="ELBERG_PROTOTYPING_Logo_software_transparent.png" alt="Elberg Prototyping" class="logo-img">
+            </a>
+        </div>
+        <nav class="desktop-nav">
+            <a href="index.html#home" class="nav-link">Home</a>
+            <a href="projects.html" class="nav-link active">Our own projects</a>
+            <a href="index.html#about" class="nav-link">About us</a>
+            <a href="index.html#contact" class="cta-button">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero documentation-hero">
+            <h1 class="hero-title">SMART <span class="gradient-text">LAMP</span></h1>
+            <p class="hero-subtitle">A biologically optimised light therapy lamp for the dark Danish winter.</p>
+            <p class="hero-tech">PCB Design &nbsp;·&nbsp; Thermal Management &nbsp;·&nbsp; Gemini API &nbsp;·&nbsp; USB-C PD</p>
+        </section>
+
+        <a href="projects.html" class="back-link">← Back to Projects</a>
+
+        <section class="glass-card detail-section">
+            <h2>The Problem</h2>
+            <p>Over 10% of Danes suffer from winter depression (Seasonal Affective Disorder / SAD). In the dark Danish winter, with typical working hours from 8 to 16, natural sunlight exposure is critically low. While consumers turn to commercial 10W RGB LED wake-up lamps, these rely on narrow-band semiconductor LEDs that emit high-intensity blue light spikes to suppress melatonin — but they emit virtually zero Near-Infrared (NIR) energy (700nm to 1400nm).</p>
+            <p>This creates what Professor Glen Jeffery (UCL) identifies as an "Infrared Famine". Research shows that NIR deficit causes mitochondrial decline and metabolic deficiency. Exposure to long-wavelength lighting within the first hours of waking increases the release of cholesterol in beneficial ways. Additionally, using bedside LED lighting in the evening suppresses melatonin and negatively impacts sleep transition. A blackbody radiator does not have this effect, making halogen a uniquely well-suited bedroom lamp.</p>
+        </section>
+
+        <section class="glass-card detail-section">
+            <h2>The Hypothesis</h2>
+            <p>A hybrid light therapy system combining high-CRI LEDs with a blackbody radiator (tungsten-halogen) can deliver the full solar spectrum (400nm to 1500nm+). By using a HUSB237 USB-C PD negotiator to request 20V from a standard charger, we can build a safe and biologically optimal wake-up lamp without a bulky mains transformer.</p>
+            <p>Three specific problems needed solving:</p>
+            <ul>
+                <li>Negotiating 20V from standard USB-C PD chargers and driving halogen PWM dimming with soft-start logic to protect the filament</li>
+                <li>Managing halogen heat (&gt;200°C) safely through a CNC-milled wood base and a passive, convection-cooled brushed aluminium top plate</li>
+                <li>Implementing zero-friction local controls — double-clap triggers and voice control, without requiring a mobile app</li>
+            </ul>
+        </section>
+
+        <section class="glass-card detail-section">
+            <h2>Iteration Log</h2>
+
+            <h3>V1 — Halogen Driving Proof of Concept</h3>
+            <p>The original proof-of-concept featured a classic ESP32, a 1.14" Tenstar T-Display, a mechanical analog joystick, and two series-connected 12V halogen bulbs. The UI was intuitive, but incorporating the joystick into a clean physical design proved troublesome. The PCB also ran very hot due to radiation from the halogen bulbs and high switching losses in the MOSFET without a gate driver.</p>
+            <div class="image-grid">
+                <img src="own_project_documentation/very_early_halogen_lamp_idea.jpg" alt="V1 early concept">
+                <img src="own_project_documentation/lamp_plastic_case_LED+halogen.jpg" alt="V1 plastic enclosure with LED and halogen">
+                <img src="own_project_documentation/thermal_camera_halogen_lamp.jpg" alt="Thermal camera — halogen lamp">
+                <img src="own_project_documentation/thermal_cam_PCB_underside.jpg" alt="Thermal camera — PCB underside">
+            </div>
+
+            <h3>V2 — Voice Input and Premium Design</h3>
+            <p>Input was changed to a premium rotational encoder — turning, short press, double press, and long press covers the full UI without a touchscreen. To address the friction of navigating multiple settings with a single encoder, voice command entry ("Set alarm for 07:30") and double-clap triggers were added via a MEMS microphone module.</p>
+            <p>Initially a local keyword-spotting neural network was implemented using Edge Impulse running on the ESP32-S3. This was elegant — the phrase "set alarm" is nearly identical across many languages, so one model could handle multiple locales. However, it required the microphone to always listen, which is undesirable in a bedroom. Instead, the microphone is only activated by a double button press, enabling a 5-second recording sent directly to the Gemini API for intent parsing.</p>
+            <p>Alarm configurations are saved to non-volatile storage, persisting across power cycles. The enclosure transitioned from a 3D-printed case to a CNC-milled wood base with a thick brushed aluminium top plate as a passive heatsink.</p>
+            <p><em>Photos below are V1.5 (plastic case with wood-effect tape) — functionally equivalent to V2.</em></p>
+            <div class="image-grid two-col">
+                <img src="own_project_documentation/lab1_lamp.jpg" alt="Smart Lamp V1.5 lab">
+                <img src="own_project_documentation/lab2_lamp.jpg" alt="Smart Lamp V1.5 build">
+            </div>
+        </section>
+
+        <section class="glass-card detail-section">
+            <h2>Technical Build</h2>
+
+            <h3>Electronics & PCB</h3>
+            <ul>
+                <li><strong>Power negotiation:</strong> HUSB237 chip configured to request 20V @ 5A from standard USB-C PD chargers</li>
+                <li><strong>Switching:</strong> Low-side dimming with high-power N-channel MOSFETs driven through a gate driver — used for both LED and halogen sources</li>
+                <li><strong>Voltage rails & MCU:</strong> LM2596 buck converter steps 20V down to 5V to power the Waveshare ESP32-S3 with integrated 1.47" LCD display</li>
+                <li><strong>Audio capture:</strong> Knowles SPH0645LM4H-B omnidirectional I2S MEMS microphone</li>
+                <li><strong>Fabrication:</strong> Custom PCB designed in EasyEDA, assembled by JLCPCB</li>
+            </ul>
+            <div class="image-grid">
+                <img src="own_project_documentation/PCB_lamp_v1.png" alt="PCB V1">
+                <img src="own_project_documentation/PCB_lamp_v1.5.png" alt="PCB V1.5">
+                <img src="own_project_documentation/PCB_lamp_v2.png" alt="PCB V2">
+            </div>
+
+            <h3>DSP Audio Pipeline</h3>
+            <ul>
+                <li><strong>Dual-core execution:</strong> Core 0 runs the UI and EC11 encoder interrupts. Core 1 runs networking and audio tasks</li>
+                <li><strong>Local clap detection:</strong> Core 1 continuously processes 1600-sample I2S chunks, calculating signal peak and RMS. A transient spike with peak &gt; 11000 and RMS &lt; 5000 flags a clap. Two within a 200ms–800ms window triggers lamp-off / alarm-dismiss</li>
+                <li><strong>Gemini speech-to-intent:</strong> Double-clicking the encoder initiates recording. The ESP32-S3 records 5 seconds into PSRAM, applies 6× software gain, downsamples 16kHz to 8kHz, packages it with a 44-byte WAV header, base64-encodes it, and posts JSON directly to the Gemini API — returning only HH:MM values in JSON</li>
+            </ul>
+
+            <h3>Thermal Management</h3>
+            <p>Halogen bulbs operate above 200°C and the high-power LEDs dissipate up to 50W at maximum brightness. A thick brushed aluminium top plate serves as a massive passive heatsink, dissipating heat from the halogen mount and PCB via natural convection through a gap in the wood base.</p>
+        </section>
+
+        <section class="glass-card detail-section">
+            <h2>Time Investment</h2>
+            <table class="detail-table">
+                <tr><th>Phase</th><th>Hours (approx)</th></tr>
+                <tr><td>V1</td><td>50</td></tr>
+                <tr><td>V2</td><td>30</td></tr>
+                <tr><td>V3</td><td>25</td></tr>
+                <tr><td><strong>Total</strong></td><td><strong>105</strong></td></tr>
+            </table>
+        </section>
+    </main>
+
+    <footer class="glass-footer">
+        <p>&copy; 2026 Elberg Prototyping. Built for Validated Learning.</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

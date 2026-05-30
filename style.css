@@ -432,3 +432,118 @@ section {
     .hero { align-items: center; text-align: center; }
     .blob { opacity: 0.3; }
 }
+
+/* ── Project Detail Pages ─────────────────────────────── */
+
+.hero-tech {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin-top: -0.5rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--accent-2);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    transition: var(--transition);
+    opacity: 0.85;
+}
+.back-link:hover { opacity: 1; transform: translateX(-4px); }
+
+.detail-section h3 {
+    font-size: 1.3rem;
+    color: var(--accent-2);
+    margin: 2rem 0 0.75rem;
+    font-weight: 600;
+}
+.detail-section h3:first-of-type { margin-top: 0.5rem; }
+
+.detail-section p,
+.detail-section li {
+    font-size: 1.05rem;
+    color: #e0f2fe;
+    line-height: 1.75;
+    margin-bottom: 0.6rem;
+}
+.detail-section ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+.detail-section strong { color: var(--text-color); }
+
+/* Image grids */
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+}
+.image-grid img {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+    aspect-ratio: 4/3;
+    border: 1px solid var(--glass-border);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.image-grid img:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+}
+.image-grid.two-col { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.image-grid.single { grid-template-columns: 1fr; max-width: 680px; }
+.image-grid.ui-screenshots img { aspect-ratio: 16/9; }
+
+/* Data tables */
+.detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+}
+.detail-table th {
+    text-align: left;
+    padding: 0.7rem 1rem;
+    color: var(--accent-2);
+    font-weight: 600;
+    border-bottom: 1px solid var(--glass-border);
+}
+.detail-table td {
+    padding: 0.7rem 1rem;
+    color: #e0f2fe;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.detail-table tr:last-child td {
+    border-bottom: none;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+/* Locked project card (Linucare) */
+.project-card.locked {
+    position: relative;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.project-card.locked * { pointer-events: none; }
+.locked-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(8px);
+    color: rgba(255,255,255,0.9);
+    padding: 0.35rem 0.85rem;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(255,255,255,0.15);
+}

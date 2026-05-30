@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taser Game | Elberg Prototyping</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <header class="glass-nav">
+        <div class="logo">
+            <a href="index.html">
+                <img src="ELBERG_PROTOTYPING_Logo_software_transparent.png" alt="Elberg Prototyping" class="logo-img">
+            </a>
+        </div>
+        <nav class="desktop-nav">
+            <a href="index.html#home" class="nav-link">Home</a>
+            <a href="projects.html" class="nav-link active">Our own projects</a>
+            <a href="index.html#about" class="nav-link">About us</a>
+            <a href="index.html#contact" class="cta-button">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero documentation-hero">
+            <h1 class="hero-title">TASER <span class="gradient-text">GAME</span></h1>
+            <p class="hero-subtitle">Combining paintball and laser tag — real consequences, zero mess.</p>
+            <p class="hero-tech">FreeRTOS &nbsp;·&nbsp; ESP-NOW &nbsp;·&nbsp; Custom PCB &nbsp;·&nbsp; Li-ion</p>
+        </section>
+
+        <a href="projects.html" class="back-link">← Back to Projects</a>
+
+        <section class="glass-card detail-section">
+            <h2>The Problem</h2>
+            <p>The gap between Laser Tag and Paintball is too large. There needs to be a middleground where the risk of getting hurt is zero, but the risk of feeling pain is real. Paintball is very immersive because the consequences of getting hit are tangible. However, getting hit in the neck leaves marks for days — the whole thing must be performed in a dedicated dirty space, and your shoes might as well go straight into the washing machine when you return.</p>
+            <p>Another major drawback of paintball is the complete absence of game statistics. Nobody knows who hit who, or who performed best.</p>
+        </section>
+
+        <section class="glass-card detail-section">
+            <h2>The Hypothesis</h2>
+            <p>The solution seemed straightforward: build a common IR LED + receiver system with an ESP32 and add a shock circuit reverse-engineered from a generic shock collar. I used a custom hobby laser tag system built by a peer as the baseline, and bought similar components for a first 2-pistol prototype to test the IR communication.</p>
+        </section>
+
+        <section class="glass-card detail-section">
+            <h2>Iteration Log</h2>
+
+            <h3>V1 — First 10-Pistol Set</h3>
+            <p>After the two-pistol prototype worked, I assembled 8 more and added a master ESP32 to periodically poll each pistol for its HitData, assembling a single true scoreboard based only on IR hits. Lost WiFi packets never become a problem — if a pistol is out of master range, the scoreboard simply is not updated until it returns. The IR hit is always the truth. HP is ALWAYS lost regardless of whether the hit confirmation reaches the shooter.</p>
+            <p>The first 10-pistol set used hardcoded master/slave MAC addresses for simplified code. While it successfully demonstrated the core mechanics, it is not scalable — replacing one device means reprogramming all others.</p>
+            <p>I brought the first set to the laser tag venue VRGame in Nørresundby. The owner was very impressed and noted that the shock circuit is a unique and valuable proposition. He also described the everyday friction with their existing system — manually turning on and connecting each pistol. He stated that for him to seriously consider a system like mine, the pistols would need to be physically larger and more robust.</p>
+            <div class="image-grid">
+                <img src="own_project_documentation/lab1_taser_game_v1.jpg" alt="Taser Game V1 lab">
+                <img src="own_project_documentation/lab2_taser_game_v1.jpg" alt="Taser Game V1 assembly">
+                <img src="own_project_documentation/lab3_taser_game_v1.jpg" alt="Taser Game V1 components">
+                <img src="own_project_documentation/lab4_taser_game_v1.jpg" alt="Taser Game V1 wiring">
+                <img src="own_project_documentation/lab5_taser_game_v1.jpg" alt="Taser Game V1 build">
+                <img src="own_project_documentation/taser_game_v1_box.jpg" alt="Taser Game V1 enclosure">
+            </div>
+
+            <h3>V2 — Scalability and Durability</h3>
+            <p>The second iteration introduced a non-hardcoded master/slave architecture with dynamic pairing — the master broadcasts and polls slaves by discovered MAC address, managing active players without hardcoded values. The focus was entirely on scalability and durability: fewer components, less manual labour, and a pistol that can survive violent use.</p>
+            <ul>
+                <li>Switched from triple-LED indicators to the single inbuilt NeoPixel on the microcontroller</li>
+                <li>Switched from the bulky TDisplay ESP32-S3 to the smaller Waveshare ESP32-S3 variant</li>
+                <li>Switched to a larger toy pistol housing, allowing all components to fit securely inside</li>
+                <li>Switched from flimsy cord to comfortable and durable watch bands for the shock circuit</li>
+                <li>Switched from manually soldered components to a custom PCB for all switching circuits</li>
+            </ul>
+            <div class="image-grid two-col">
+                <img src="own_project_documentation/taser_game_lab_v2.jpg" alt="Taser Game V2 lab">
+                <img src="own_project_documentation/PCB_taser_game.png" alt="Custom PCB design">
+            </div>
+        </section>
+
+        <section class="glass-card detail-section">
+            <h2>Technical Build</h2>
+
+            <h3>Hardware Architecture</h3>
+            <ul>
+                <li><strong>Topology:</strong> Master/Slave with peer-to-peer elements — 1 Master Base Station, currently 10 Slave pistols</li>
+                <li><strong>Slave MCU:</strong> Waveshare ESP32-S3 1.47" LCD boards</li>
+                <li><strong>Master MCU:</strong> ESP32 WROOM with external antenna</li>
+                <li><strong>Communication:</strong> ESP-NOW. Master polls sequentially for ScoreboardData. Slaves respond with running totals (HitData). Hit confirmations sent peer-to-peer between slaves</li>
+            </ul>
+
+            <h3>Electronics & PCB</h3>
+            <ul>
+                <li><strong>IR system:</strong> VSLY5940 IR LED controlled by N-channel MOSFET. 3× TSOP32338 receivers per gun</li>
+                <li><strong>Feedback:</strong> Existing toy gun speaker and vibration motor wired to switching circuits on the added PCB</li>
+                <li><strong>Shock module:</strong> 4V to 1800V converter controlled via N-channel MOSFET for micro-ampere short shocks</li>
+                <li><strong>Power:</strong> 18650 Li-ion cell using the ESP32's inbuilt charging circuit. Power bank for base station</li>
+                <li><strong>Display:</strong> 1.47" TFT display providing real-time player status</li>
+            </ul>
+            <div class="image-grid two-col">
+                <img src="own_project_documentation/PCB_taser_game.png" alt="Custom PCB design">
+                <img src="own_project_documentation/osc_shock.png" alt="Oscilloscope — shock circuit">
+            </div>
+
+            <h3>Embedded Software — RTOS</h3>
+            <ul>
+                <li><strong>Protocol:</strong> NEC protocol (38kHz carrier, 67.5ms packet duration). Packets include PlayerID, Damage, and an 8-bit Timestamp for duplicate hit rejection</li>
+                <li><strong>Task architecture:</strong> FreeRTOS with dual-core task division — non-time-critical tasks on Core 0, all network tasks on Core 1</li>
+                <li><strong>Data integrity:</strong> Slaves maintain authoritative running totals. Master aggregates for eventual consistency. Strict MUTEX implementation prevents shared resource corruption</li>
+            </ul>
+
+            <h3>Tablet UI</h3>
+            <p>A tablet connects directly to the Master's web server with no app installation required. The interface provides game configuration (modes, team count, duration), a real-time global scoreboard during play showing kills, damage dealt, and team scores, and a final results screen highlighting top performers.</p>
+            <div class="image-grid two-col ui-screenshots">
+                <img src="own_project_documentation/taser_game_UI.png" alt="Scoreboard UI">
+                <img src="own_project_documentation/taser_game_UI_team_deathmatch.png" alt="Team Deathmatch mode UI">
+            </div>
+        </section>
+
+        <section class="glass-card detail-section">
+            <h2>Time Investment</h2>
+            <table class="detail-table">
+                <tr><th>Phase</th><th>Hours (approx)</th></tr>
+                <tr><td>Research & system architecture</td><td>50</td></tr>
+                <tr><td>Manual assembly V1</td><td>30</td></tr>
+                <tr><td>PCB design & assembly V2</td><td>20</td></tr>
+                <tr><td>Embedded software V1 and V2</td><td>40</td></tr>
+                <tr><td><strong>Total</strong></td><td><strong>140</strong></td></tr>
+            </table>
+        </section>
+
+        <section class="glass-card detail-section">
+            <h2>User Validation</h2>
+            <p>The V1 set was tested with a gymnastics team to evaluate shock magnitude, ease of use, and game mode logic.</p>
+            <ul>
+                <li><strong>Shock magnitude:</strong> Perceived as too high at the lowest setting, with no significant difference between medium and high. Linear duration parameters do not equate to linear pain perception. Fix: shorten the low-setting pulse, keep medium, extend high to differentiate more clearly</li>
+                <li><strong>Usability:</strong> Game mode logic was intuitive and worked without explanation. Tablet UI was easy to navigate</li>
+            </ul>
+        </section>
+
+        <section class="glass-card detail-section">
+            <h2>Lessons Learned</h2>
+            <p>Manual assembly and retrofitting took much more time than anticipated. Many hours can be saved by designing a PCB earlier and planning for the least possible physical change when retrofitting an existing product — the V2 PCB proved this dramatically.</p>
+        </section>
+    </main>
+
+    <footer class="glass-footer">
+        <p>&copy; 2026 Elberg Prototyping. Built for Validated Learning.</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -400,11 +400,31 @@ section {
 /* Footer */
 .glass-footer {
     text-align: center;
-    padding: 3rem 5%;
+    padding: 2.5rem 5%;
     border-top: 1px solid var(--glass-border);
     backdrop-filter: blur(12px);
     background: rgba(0, 0, 0, 0.1);
     color: rgba(255, 255, 255, 0.6);
+}
+
+.footer-meta {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 2rem;
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.footer-meta a {
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-meta a:hover {
+    color: var(--accent-2);
 }
 
 /* Animations */

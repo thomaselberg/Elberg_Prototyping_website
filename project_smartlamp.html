@@ -36,38 +36,39 @@
 
         <section class="glass-card detail-section">
             <h2>The Problem</h2>
-            <p>Over 10% of Danes suffer from winter depression (Seasonal Affective Disorder / SAD). In the dark Danish winter, with typical working hours from 8 to 16, natural sunlight exposure is critically low. While consumers turn to commercial 10W RGB LED wake-up lamps, these rely on narrow-band semiconductor LEDs that emit high-intensity blue light spikes to suppress melatonin — but they emit virtually zero Near-Infrared (NIR) energy (700nm to 1400nm).</p>
-            <p>This creates what Professor Glen Jeffery (UCL) identifies as an "Infrared Famine". Research shows that NIR deficit causes mitochondrial decline and metabolic deficiency. Exposure to long-wavelength lighting within the first hours of waking increases the release of cholesterol in beneficial ways. Additionally, using bedside LED lighting in the evening suppresses melatonin and negatively impacts sleep transition. A blackbody radiator does not have this effect, making halogen a uniquely well-suited bedroom lamp.</p>
+            <p>Over 10% of Danes suffer from winter depression (Seasonal Affective Disorder / SAD). In the dark Danish winter, with typical working hours from 8 to 16, natural sunlight exposure is critically low. While consumers turn to commercial 10W RGB LED wake-up lamps, these rely on narrow-band semiconductor LEDs that emit high-intensity blue light spikes to suppress melatonin and force waking, but they emit virtually zero Near-Infrared (NIR) energy (700nm to 1400nm).</p>
+            <p>This creates what Professor Glen Jeffery (UCL) identifies as an "Infrared Famine". Research shows that this NIR deficit causes a mitochondrial decline and metabolic deficiency. Exposure to long wavelength lighting within the first hours of waking increases the release of cholesterol, which is beneficial in numerous ways. Additionally, using bedside LED lighting in the evening suppresses melatonin negatively impacting the transition to sleep. A blackbody radiator does not have this effect, making it a very intuitive bedroom desk lamp replacement.</p>
         </section>
 
         <section class="glass-card detail-section">
             <h2>The Hypothesis</h2>
-            <p>A hybrid light therapy system combining high-CRI LEDs with a blackbody radiator (tungsten-halogen) can deliver the full solar spectrum (400nm to 1500nm+). By using a HUSB237 USB-C PD negotiator to request 20V from a standard charger, we can build a safe and biologically optimal wake-up lamp without a bulky mains transformer.</p>
-            <p>Three specific problems needed solving:</p>
-            <ul>
-                <li>Negotiating 20V from standard USB-C PD chargers and driving halogen PWM dimming with soft-start logic to protect the filament</li>
-                <li>Managing halogen heat (&gt;200°C) safely through a CNC-milled wood base and a passive, convection-cooled brushed aluminium top plate</li>
-                <li>Implementing zero-friction local controls — double-clap triggers and voice control, without requiring a mobile app</li>
-            </ul>
+            <p>A hybrid lysterapi (light therapy) system combining high-CRI LEDs with a black-body radiator (tungsten-halogen) can deliver the full solar spectrum (400nm to 1500nm+). By using a HUSB237 negotiator to request 20V and high current from a standard USB-C PD power supply we can build a safe and biologically optimal wake-up lamp.</p>
+            <p>To validate this, we set out to build an ESP32-S3 controlled smart lamp:</p>
+            <ol>
+                <li>Negotiating 20V from standard USB-C PD chargers and driving halogen PWM dimming with soft-start logic to protect the filament.</li>
+                <li>Managing halogen heat (&gt;200°C) safely through a Scandinavian CNC-milled wood base and a passive, convection-cooled brushed aluminum top plate.</li>
+                <li>Implementing zero-friction local controls, including double-clap triggers and voice-control without requiring a mobile app.</li>
+            </ol>
         </section>
 
         <section class="glass-card detail-section">
             <h2>Iteration Log</h2>
 
-            <h3>V1 — Halogen Driving Proof of Concept</h3>
-            <p>The original proof-of-concept featured a classic ESP32, a 1.14" Tenstar T-Display, a mechanical analog joystick, and two series-connected 12V halogen bulbs. The UI was intuitive, but incorporating the joystick into a clean physical design proved troublesome. The PCB also ran very hot due to radiation from the halogen bulbs and high switching losses in the MOSFET without a gate driver.</p>
+            <h3>V1 — Halogen driving PoC</h3>
+            <p>The original proof-of-concept featured a classic ESP32, a 1.14" Tenstar T-Display, a mechanical analog joystick, and two series-connected 12V halogen bulbs.</p>
+            <p><em>Feedback:</em> The user interface was intuitive, but incorporating the joystick in a clean design was troublesome. PCB got very hot due to radiation from halogen bulbs and high switching losses in the mosfet without using gate driver.</p>
             <div class="image-grid">
                 <img src="own_project_documentation/very_early_halogen_lamp_idea.jpg" alt="V1 early concept">
-                <img src="own_project_documentation/lamp_plastic_case_LED+halogen.jpg" alt="V1 plastic enclosure with LED and halogen">
+                <img src="own_project_documentation/lamp_plastic_case_LED+halogen.jpg" alt="V1 plastic enclosure">
                 <img src="own_project_documentation/thermal_camera_halogen_lamp.jpg" alt="Thermal camera — halogen lamp">
                 <img src="own_project_documentation/thermal_cam_PCB_underside.jpg" alt="Thermal camera — PCB underside">
             </div>
 
-            <h3>V2 — Voice Input and Premium Design</h3>
-            <p>Input was changed to a premium rotational encoder — turning, short press, double press, and long press covers the full UI without a touchscreen. To address the friction of navigating multiple settings with a single encoder, voice command entry ("Set alarm for 07:30") and double-clap triggers were added via a MEMS microphone module.</p>
-            <p>Initially a local keyword-spotting neural network was implemented using Edge Impulse running on the ESP32-S3. This was elegant — the phrase "set alarm" is nearly identical across many languages, so one model could handle multiple locales. However, it required the microphone to always listen, which is undesirable in a bedroom. Instead, the microphone is only activated by a double button press, enabling a 5-second recording sent directly to the Gemini API for intent parsing.</p>
-            <p>Alarm configurations are saved to non-volatile storage, persisting across power cycles. The enclosure transitioned from a 3D-printed case to a CNC-milled wood base with a thick brushed aluminium top plate as a passive heatsink.</p>
-            <p><em>Photos below are V1.5 (plastic case with wood-effect tape) — functionally equivalent to V2.</em></p>
+            <h3>V2 — Voice Input and premium design</h3>
+            <p>Input was changed to premium-feeling rotational encoder for single component input mechanism. An intuitive UI is made based on just turning, short press, double press and long press of the encoder. The single input system means changing multiple settings can be cumbersome. To address this, voice command entry (e.g., "Set alarm for 07:30") and double-clap triggers was added with a MEMS microphone module.</p>
+            <p>Initially, we implemented a local keyword spotting neural network (using Edge Impulse) running locally on the ESP32-S3. This leverages the fact that the sentence "set alarm" is identical in many languages, meaning a single wake word detection algorithm could be used for many languages. Although elegant, this means the device would always be "listening", which is not great in a bedroom. Instead, the microphone is only waken up by a double press which enabled a 5s recording that is sent to the Gemini API along with a prompt to return a certain format.</p>
+            <p>Alarm configurations are saved to the ESP32's non-volatile storage to save user input across power ups, reducing friction. The enclosure transitioned from simple 3d printed case to a wood base with a thick brushed aluminum top plate acting as a passive heatsink.</p>
+            <p><em>These are technically not v2, but rather v1.5 as this was a test for plastic with wooden "tape" around it. Functionally v2, but without paying up for wooden boxes and metal lid. Real v2 pictures coming soon.</em></p>
             <div class="image-grid two-col">
                 <img src="own_project_documentation/lab1_lamp.jpg" alt="Smart Lamp V1.5 lab">
                 <img src="own_project_documentation/lab2_lamp.jpg" alt="Smart Lamp V1.5 build">
@@ -79,11 +80,11 @@
 
             <h3>Electronics & PCB</h3>
             <ul>
-                <li><strong>Power negotiation:</strong> HUSB237 chip configured to request 20V @ 5A from standard USB-C PD chargers</li>
-                <li><strong>Switching:</strong> Low-side dimming with high-power N-channel MOSFETs driven through a gate driver — used for both LED and halogen sources</li>
-                <li><strong>Voltage rails & MCU:</strong> LM2596 buck converter steps 20V down to 5V to power the Waveshare ESP32-S3 with integrated 1.47" LCD display</li>
-                <li><strong>Audio capture:</strong> Knowles SPH0645LM4H-B omnidirectional I2S MEMS microphone</li>
-                <li><strong>Fabrication:</strong> Custom PCB designed in EasyEDA, assembled by JLCPCB</li>
+                <li><strong>Power Negotiation:</strong> HUSB237 chip configured to request 20V @ 5A from a standard USB-C PD charger.</li>
+                <li><strong>Switching:</strong> Low-side dimming with high-power N-channel MOSFETs driven by microcontroller through a gate driver is used for both LED and halogen light sources.</li>
+                <li><strong>Voltage Rails & MCU:</strong> LM2596 buck converter steps down 20V VCC to 5V to power the Waveshare ESP32-S3 with integrated 1.47" LCD display.</li>
+                <li><strong>Audio Capture:</strong> Knowles SPH0645LM4H-B omnidirectional I2S MEMS microphone.</li>
+                <li><strong>Custom PCB design:</strong> using EasyEDA and assembly by JLCPCB.</li>
             </ul>
             <div class="image-grid">
                 <img src="own_project_documentation/PCB_lamp_v1.png" alt="PCB V1">
@@ -93,13 +94,15 @@
 
             <h3>DSP Audio Pipeline</h3>
             <ul>
-                <li><strong>Dual-core execution:</strong> Core 0 runs the UI and EC11 encoder interrupts. Core 1 runs networking and audio tasks</li>
-                <li><strong>Local clap detection:</strong> Core 1 continuously processes 1600-sample I2S chunks, calculating signal peak and RMS. A transient spike with peak &gt; 11000 and RMS &lt; 5000 flags a clap. Two within a 200ms–800ms window triggers lamp-off / alarm-dismiss</li>
-                <li><strong>Gemini speech-to-intent:</strong> Double-clicking the encoder initiates recording. The ESP32-S3 records 5 seconds into PSRAM, applies 6× software gain, downsamples 16kHz to 8kHz, packages it with a 44-byte WAV header, base64-encodes it, and posts JSON directly to the Gemini API — returning only HH:MM values in JSON</li>
+                <li><strong>Dual-Core Execution:</strong> Core 0 runs the UI and handles EC11 encoder interrupts. Core 1 runs the networking and audio tasks.</li>
+                <li><strong>Local Clap Detection:</strong> Core 1 continuously processes 1600-sample chunks of I2S microphone data. It calculates the raw signal peak and Root Mean Square (RMS). A transient spike with <code>peak &gt; 11000</code> and <code>rms &lt; 5000</code> is flagged. If a double peak is detected within a 200ms–800ms window, the system flips a flag to shut off the lamp and dismiss active alarms.</li>
+                <li><strong>Gemini Speech-to-Intent:</strong> Double-clicking the encoder button initiates recording. The ESP32-S3 records 5 seconds of audio into PSRAM, applies 6x software gain, downsamples from 16kHz to 8kHz, packages it with a 44-byte WAV header, base64-encodes it, and posts the JSON payload directly to the Google Gemini API. The system prompt instructs Gemini to output only <code>HH:MM</code> values in JSON, which are then displayed on screen and used to change alarm settings.</li>
             </ul>
 
-            <h3>Thermal Management</h3>
-            <p>Halogen bulbs operate above 200°C and the high-power LEDs dissipate up to 50W at maximum brightness. A thick brushed aluminium top plate serves as a massive passive heatsink, dissipating heat from the halogen mount and PCB via natural convection through a gap in the wood base.</p>
+            <h3>Mechanical / Enclosure</h3>
+            <ul>
+                <li><strong>Thermals:</strong> Halogen bulbs operate at temperatures &gt;200°C and the high power LEDs need to dissipate up to 50W of heat at maximum brightness. A brushed aluminum top plate is utilized as a massive passive heatsink to dissipate heat from halogen bulb mount and the PCB via natural convection.</li>
+            </ul>
         </section>
 
         <section class="glass-card detail-section">

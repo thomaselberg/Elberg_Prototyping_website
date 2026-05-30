@@ -36,59 +36,59 @@
 
         <section class="glass-card detail-section">
             <h2>The Problem</h2>
-            <p>I am a gymnast. I have spent years training for explosiveness to improve performance in tumbling and trampoline. It is, however, much more difficult to assess progression compared to regular strength training, where load and repetitions are quantifiable. Peak force production, Rate of Force Development (RFD) and Reactive Strength Index (RSI) are arguably more important for athletes in explosive sports than sheer strength.</p>
-            <p>Professional force plate systems do allow athletes to measure these attributes, but they are expensive and not widely available. The gymnastics clubs, sports boarding schools and functional fitness clubs that could benefit the most from this data seldom have access to it.</p>
-            <p>With modern generative AI tools, the gap between "I know what to measure" and "I have working code that measures it" has collapsed. I know biomechanics. I know what the force curve of a good jump looks like. Building the hardware and software to capture and visualise it is now a matter of days, not months.</p>
+            <p>I am a gymnast. I have spent years training for explosiveness to improve performance in tumbling and trampoline like many peers. It is, however, much more difficult to assess progression compared to regular strength training, where load and repetitions are quantifiable. Peak force production, Rate of Force Development (RFD) and Reactive Strength Index (RSI) are arguably more important for athletes in explosive sports than sheer strength. Professional force plate systems do allow athletes to measure the mentioned attributes, but they are expensive and not widely used. The gymnastics clubs, sports boarding schools and functional fitness clubs that could benefit the most from this data seldomly have access to it.</p>
+            <p>With modern generative AI tools, the gap between "I know what to measure" and "I have working code that measures it" has collapsed. I know biomechanics. I know what the force curve of a good jump looks like. Building the hardware and software to capture and visualize it is now a matter of days, not months.</p>
         </section>
 
         <section class="glass-card detail-section">
             <h2>The Hypothesis</h2>
-            <p>Off-the-shelf load cells and an ESP32 can produce lab-grade force curve data at roughly 1% of the cost of commercial systems. A tablet-accessible web interface means no software installation, no laptop required, and any coach can operate it. Peak force, time of flight, jump height, and RFD can all be computed in the browser and visualised instantly.</p>
-            <p>The commercial concept is <strong>Aalborg Athlete Analysis</strong> — bringing the hardware to clubs and running 8-week measurement programs combining training knowledge, nutrition, and quantified progression tracking in vertical jumps and sprint.</p>
+            <p>Off-the-shelf load cells and an ESP32 can produce lab-grade force curve data at roughly 1% of the cost of commercial systems. A tablet-accessible web interface means no software installation, no laptop required, and any coach can operate it. The analysis — peak force, time of flight, jump height, RFD — can be computed in the browser and visualized instantly.</p>
+            <p>The commercial concept Aalborg Athlete Analysis brings the custom developed hardware into action with 8-week programs with knowledge about training and nutrition and measuring progression throughout the program in specifically vertical jumps and sprint.</p>
         </section>
 
         <section class="glass-card detail-section">
             <h2>Iteration Log</h2>
 
             <h3>V1 — Proof of Concept</h3>
-            <p>The first version was a hacked bathroom scale retrofitted with an HX711 amplifier and an ESP32. The firmware served a minimal web page over WiFi where you could tare the scale, trigger a 5-second recording, and download a raw CSV for later analysis in Python.</p>
-            <p>The first version was tested on myself and a handful of gymnasts. The physics worked — data was clean enough to see clear differences between athletes. The main problems were the glass scale feeling fragile with too small a footprint, and athletes needing a visual cue for when to jump.</p>
+            <p>The first version was a hacked bathroom scale retrofitted with a HX711 amplifier and an ESP32. The firmware served a minimal web page over WiFi where you could tare the scale, trigger a 5-second recording, and download a raw CSV for later analysis.</p>
+            <p>The first version was tested on myself and a handful of gymnasts. The physics worked. The data was clean enough to see clear differences between athletes. Main problem was the glass bathroom scale feeling fragile and too small footprint. Also, the users proposed a "traffic light" indicator to prepare for the jump.</p>
 
             <h3>V2 — Usable in the Field</h3>
-            <p>V2 focused entirely on making the system operator-independent. Major changes:</p>
+            <p>The first version was not something you could hand to a coach and walk away from. V2 focused entirely on making it operator-independent.</p>
+            <p>Major changes:</p>
             <ul>
-                <li><strong>LED traffic light sequence:</strong> Red (setup) → Yellow (prepare) → Green (recording). The athlete knows exactly when to jump</li>
-                <li><strong>Web-based analysis:</strong> The jump analysis algorithm was ported to JavaScript and runs directly in the browser — no Python or laptop required</li>
-                <li><strong>Time-aligned overlays:</strong> All jumps are shifted so takeoff occurs at exactly t=1.0s, enabling direct comparison of force profiles across athletes and sessions</li>
-                <li><strong>Robust build:</strong> Electronics mounted to a thick, much wider wooden block — stable under 1500N+ loads</li>
+                <li><strong>LED traffic light sequence:</strong> Red (setup) → Yellow (prepare) → Green (recording). The athlete knows exactly when to jump.</li>
+                <li><strong>Web-based analysis:</strong> The jump analysis algorithm was ported to JavaScript and runs directly in the browser. The operator sees an overlaid force curve plot instantly on the tablet.</li>
+                <li><strong>Time-aligned overlays:</strong> All jumps are shifted so takeoff occurs at exactly t=1.0s on the plot, enabling direct comparison of acceleration and deceleration profiles across athletes and sessions.</li>
+                <li><strong>Robust build:</strong> The electronics are mounted to a thick and much wider wooden block.</li>
             </ul>
         </section>
 
         <section class="glass-card detail-section">
             <h2>Technical Build</h2>
 
-            <h3>Hardware</h3>
+            <h3>Hardware Architecture</h3>
             <ul>
-                <li><strong>Load cells:</strong> 4× 50kg load cells in Wheatstone bridge configuration with HX711 24-bit ADC amplifier</li>
+                <li><strong>Load cells:</strong> 4x 50kg Load Cells in Wheatstone bridge with HX711 amplifier</li>
                 <li><strong>Microcontroller:</strong> ESP32-S3 Zero</li>
-                <li><strong>Connectivity:</strong> Soft AP WiFi — no router required, tablet connects directly to the plate</li>
-                <li><strong>Sampling rate:</strong> ~80Hz</li>
+                <li><strong>WiFi:</strong> Soft AP mode — no router required, tablet connects directly to the plate</li>
+                <li><strong>Sampling rate:</strong> ~80hz</li>
             </ul>
 
             <h3>Embedded Software</h3>
-            <p>The firmware runs a state machine managing calibration, athlete setup, jump recording, and data retrieval. During recording the ESP32 streams timestamped force samples (milliseconds; Newtons) to on-board FFat flash storage. After recording, the web UI fetches the CSV and renders analysis client-side. The CSV format is human-readable and trivially re-analysable in Python or spreadsheets.</p>
+            <p>The firmware runs a state machine managing calibration, athlete setup, jump recording, and data retrieval. During recording the ESP32 streams timestamped force samples (milliseconds; Newtons) to FFat storage. After recording, the web UI fetches the CSV and renders the analysis client-side.</p>
+            <p>The CSV format is human-readable and trivial to re-analyse offline in spreadsheets or Python if needed.</p>
 
             <h3>Web Interface & Analysis</h3>
-            <p>The tablet UI has four sections: Calibration, Athlete Setup, Record Jump, and Analysis. The analysis panel renders a Canvas-based overlay plot of all recorded jumps, time-aligned to takeoff. Metrics per jump: Peak Force (N), Jump Height (cm), Time of Flight (ms).</p>
+            <p>The tablet UI has four sections: Calibration, Athlete Setup, Record Jump, and Analysis. The analysis panel renders a Canvas-based overlay plot of the recorded jumps, time-aligned to takeoff. Metrics displayed per jump: Peak Force (N), Jump Height (cm), Time of Flight (ms).</p>
             <div class="image-grid single">
-                <img src="own_project_documentation/forceplate_UI.png" alt="Force plate tablet dashboard — force curve overlay">
+                <img src="own_project_documentation/forceplate_UI.png" alt="Force plate tablet dashboard">
             </div>
         </section>
 
         <section class="glass-card detail-section">
-            <h2>Future Direction — IMU Sprint Analysis</h2>
+            <h2>Future Direction — Add IMU Sprint Analysis</h2>
             <p>The next expansion under the Aalborg Athlete Analysis concept is a sprint analysis vest using an MPU6050 IMU at 100Hz with DMP (Digital Motion Processor). Mounted in a retrofitted GoPro-style chest harness, the IMU captures vertical displacement, acceleration curves, and lean angle throughout a sprint.</p>
-            <p>This extends the same AAA concept — bring hardware to clubs, measure athletes, give coaches data they have never had — from jumping to sprint mechanics. Vertical oscillation, ground contact time estimation, and acceleration profile shape are all derivable from a single IMU at this sample rate. The reason this is feasible is the same as the force plate: the biomechanics are already understood, and the software layer between raw IMU data and useful training insight can be built in days with modern AI tools.</p>
         </section>
 
         <section class="glass-card detail-section">
@@ -104,16 +104,16 @@
 
         <section class="glass-card detail-section">
             <h2>User Validation</h2>
-            <p>15 athletes measured across gymnastics and strength sport backgrounds. Key findings:</p>
+            <p>15 athletes measured. Key findings:</p>
             <ul>
-                <li>Force curve shape is immediately interpretable by athletes and coaches without any prior training — the visual difference between jump profiles is obvious</li>
-                <li>The LED traffic light sequence was universally understood without explanation</li>
+                <li>Force curve shape is immediately interpretable by athletes and other coaches with no training.</li>
+                <li>The LED traffic light sequence was universally understood without explanation.</li>
             </ul>
         </section>
 
         <section class="glass-card detail-section">
             <h2>Lessons Learned</h2>
-            <p>Bringing spare parts to testing sessions is necessary when large forces are involved. One user broke a single leg of the V2 platform in the first jump due to a crooked landing. Nothing survives a 1500N blow at an angle, but replacing the part would have been trivial if spares had been brought along.</p>
+            <p>Bringing spare parts to testing is necessary when large forces are at play. One user broke a single leg of the V2 in the first jump because of a crooked landing. Nothing can survive a 1500N blow at an angle, but replacing the part would have been easy if spares were brought.</p>
         </section>
     </main>
 

@@ -36,43 +36,41 @@
 
         <section class="glass-card detail-section">
             <h2>The Problem</h2>
-            <p>The gap between Laser Tag and Paintball is too large. There needs to be a middleground where the risk of getting hurt is zero, but the risk of feeling pain is real. Paintball is very immersive because the consequences of getting hit are tangible. However, getting hit in the neck leaves marks for days — the whole thing must be performed in a dedicated dirty space, and your shoes might as well go straight into the washing machine when you return.</p>
-            <p>Another major drawback of paintball is the complete absence of game statistics. Nobody knows who hit who, or who performed best.</p>
+            <p>The gap between Laser Tag and Paintball is too large. There needs to be a middleground, where the risk of getting hurt is zero, but risk of feeling pain is large. Paintball is very immersive because the consequences of getting hit are very real and tangible. However, getting hit in the neck leaves marks for days and the whole shenanigans is a mess that must be performed in a dedicated dirty space and your shoes might as well go directly in the washing machine when you return. Another drawback of Paintball is lack of statistics for a paintball game. Nobody knows who has hit who or who did best.</p>
         </section>
 
         <section class="glass-card detail-section">
             <h2>The Hypothesis</h2>
-            <p>The solution seemed straightforward: build a common IR LED + receiver system with an ESP32 and add a shock circuit reverse-engineered from a generic shock collar. I used a custom hobby laser tag system built by a peer as the baseline, and bought similar components for a first 2-pistol prototype to test the IR communication.</p>
+            <p>The problem seemed simple to solve: Just build a common IR LED + receiver system with an esp32 and add a shock circuit reverse engineered from a generic shock collar. I used a custom hobby laser tag system built by a peer as the baseline and bought similar components for the first 2-pistol prototype in order to test the IR communication.</p>
         </section>
 
         <section class="glass-card detail-section">
             <h2>Iteration Log</h2>
 
-            <h3>V1 — First 10-Pistol Set</h3>
-            <p>After the two-pistol prototype worked, I assembled 8 more and added a master ESP32 to periodically poll each pistol for its HitData, assembling a single true scoreboard based only on IR hits. Lost WiFi packets never become a problem — if a pistol is out of master range, the scoreboard simply is not updated until it returns. The IR hit is always the truth. HP is ALWAYS lost regardless of whether the hit confirmation reaches the shooter.</p>
-            <p>The first 10-pistol set used hardcoded master/slave MAC addresses for simplified code. While it successfully demonstrated the core mechanics, it is not scalable — replacing one device means reprogramming all others.</p>
-            <p>I brought the first set to the laser tag venue VRGame in Nørresundby. The owner was very impressed and noted that the shock circuit is a unique and valuable proposition. He also described the everyday friction with their existing system — manually turning on and connecting each pistol. He stated that for him to seriously consider a system like mine, the pistols would need to be physically larger and more robust.</p>
+            <h3>V1</h3>
+            <p>After the two-pistol prototype worked, i assembled 8 more and added a master esp32 to periodically ask each pistol for its HitData to assemble a single true scoreboard based on only the IR hits. This means lost wifi packets never becomes a problem. If one pistol is outside range from the master, then the scoreboard is simply not updated with that pistols information until it returns in range. In this way the IR is always the truth. HP is ALWAYS lost regardless of the hitconfirmation reaching the shooter or not. The first 10 pistol set utilizes hardcoded master/slave MAC-addresses for simplified code. While it successfully demonstrated the core mechanics of IR hit detection and ESP-NOW communication, it is not a scalable solution as replacing one device means all other devices must be reprogrammed.</p>
+            <p>Additionally, i took the first set to the laser tag venue VRGame in Nørresundby. The owner was very impressed with the prototype and expressed that the added shock circuit is a unique and valuable proposition. The owner also explained the hurdles they have with their existing system such as manually turning all pistols on and connecting them - providing valuable insight into the important "everyday" convenience perspective of the venue owner. The owner told me that, in order for him to consider a system such as mine, it had to consist of physically larger and more robust pistols. The users are not very caring of the hardware and thus it needs to be able to take a beating.</p>
             <div class="image-grid">
                 <img src="own_project_documentation/lab1_taser_game_v1.jpg" alt="Taser Game V1 lab">
-                <img src="own_project_documentation/lab2_taser_game_v1.jpg" alt="Taser Game V1 assembly">
-                <img src="own_project_documentation/lab3_taser_game_v1.jpg" alt="Taser Game V1 components">
-                <img src="own_project_documentation/lab4_taser_game_v1.jpg" alt="Taser Game V1 wiring">
-                <img src="own_project_documentation/lab5_taser_game_v1.jpg" alt="Taser Game V1 build">
+                <img src="own_project_documentation/lab2_taser_game_v1.jpg" alt="Taser Game V1 lab">
+                <img src="own_project_documentation/lab3_taser_game_v1.jpg" alt="Taser Game V1 lab">
+                <img src="own_project_documentation/lab4_taser_game_v1.jpg" alt="Taser Game V1 lab">
+                <img src="own_project_documentation/lab5_taser_game_v1.jpg" alt="Taser Game V1 lab">
                 <img src="own_project_documentation/taser_game_v1_box.jpg" alt="Taser Game V1 enclosure">
             </div>
 
-            <h3>V2 — Scalability and Durability</h3>
-            <p>The second iteration introduced a non-hardcoded master/slave architecture with dynamic pairing — the master broadcasts and polls slaves by discovered MAC address, managing active players without hardcoded values. The focus was entirely on scalability and durability: fewer components, less manual labour, and a pistol that can survive violent use.</p>
+            <h3>V2</h3>
+            <p>The Second iteration introduced a non-hardcoded master/slave architecture. We implemented dynamic pairing where the master could dynamically broadcast and poll slaves, managing active players without hardcoded MAC addresses. Additionally, we sourced larger toy pistols with added vibration feedback motor control and switched to a PCB for the switching circuits instead of manually soldered components. The theme of the second iteration was scalability and durability. Specifically a focus on reducing component count, reducing manual labor and building the pistol to survive violent use.</p>
+            <p>Major changes include:</p>
             <ul>
-                <li>Switched from triple-LED indicators to the single inbuilt NeoPixel on the microcontroller</li>
-                <li>Switched from the bulky TDisplay ESP32-S3 to the smaller Waveshare ESP32-S3 variant</li>
-                <li>Switched to a larger toy pistol housing, allowing all components to fit securely inside</li>
-                <li>Switched from flimsy cord to comfortable and durable watch bands for the shock circuit</li>
-                <li>Switched from manually soldered components to a custom PCB for all switching circuits</li>
+                <li>Switching from triple-LED indicators to the single inbuilt NEOPIXEL on the microcontroller.</li>
+                <li>Switching from bulky Tdisplay esp32-s3 microcontroller to smaller Waveshare esp32-s3 variant.</li>
+                <li>Switching to larger toy pistol allowing all components to fit securely inside the housing.</li>
+                <li>Switching from flimsy cord to comfortable and durable watch bands for the shock circuit.</li>
             </ul>
             <div class="image-grid two-col">
                 <img src="own_project_documentation/taser_game_lab_v2.jpg" alt="Taser Game V2 lab">
-                <img src="own_project_documentation/PCB_taser_game.png" alt="Custom PCB design">
+                <img src="own_project_documentation/osc_shock.png" alt="Oscilloscope screenshot of shock circuit">
             </div>
         </section>
 
@@ -81,34 +79,40 @@
 
             <h3>Hardware Architecture</h3>
             <ul>
-                <li><strong>Topology:</strong> Master/Slave with peer-to-peer elements — 1 Master Base Station, currently 10 Slave pistols</li>
-                <li><strong>Slave MCU:</strong> Waveshare ESP32-S3 1.47" LCD boards</li>
-                <li><strong>Master MCU:</strong> ESP32 WROOM with external antenna</li>
-                <li><strong>Communication:</strong> ESP-NOW. Master polls sequentially for ScoreboardData. Slaves respond with running totals (HitData). Hit confirmations sent peer-to-peer between slaves</li>
+                <li><strong>Topology:</strong> Master/Slave architecture with Peer-to-Peer elements. 1 Master "Base Station" currently 10 "Slave" pistols.</li>
+                <li><strong>Microcontrollers:</strong>
+                    <ul>
+                        <li>Slaves: Waveshare ESP32-S3 1.47" LCD boards.</li>
+                        <li>Master: ESP32 WROOM with external antenna.</li>
+                    </ul>
+                </li>
+                <li><strong>Communication:</strong> ESP-NOW protocol. Master polls sequentially (ScoreboardData), Slaves respond with running totals (HitData). Immediate hit confirmations (HitConfirm) are sent via direct P2P between slaves.</li>
             </ul>
 
             <h3>Electronics & PCB</h3>
             <ul>
-                <li><strong>IR system:</strong> VSLY5940 IR LED controlled by N-channel MOSFET. 3× TSOP32338 receivers per gun</li>
-                <li><strong>Feedback:</strong> Existing toy gun speaker and vibration motor wired to switching circuits on the added PCB</li>
-                <li><strong>Shock module:</strong> 4V to 1800V converter controlled via N-channel MOSFET for micro-ampere short shocks</li>
-                <li><strong>Power:</strong> 18650 Li-ion cell using the ESP32's inbuilt charging circuit. Power bank for base station</li>
-                <li><strong>Display:</strong> 1.47" TFT display providing real-time player status</li>
+                <li><strong>IR System:</strong> VSLY5940 IR LED controlled by an N-channel MOSFET. 3x TSOP32338 receivers per gun.</li>
+                <li><strong>Feedback Systems:</strong> Existing toy gun speaker and vibration motor wired to switching circuits on the added PCB.</li>
+                <li><strong>Shock Module:</strong> 4V to 1800V converter controlled via N-channel MOSFET for micro-ampere short shocks.</li>
+                <li><strong>Power:</strong> 18650 Li-ion cell utilizing the ESP32's inbuilt charging circuit. Power bank for the base station.</li>
+                <li><strong>Display:</strong> The 1.47" TFT display provides information in real time.</li>
             </ul>
-            <div class="image-grid two-col">
-                <img src="own_project_documentation/PCB_taser_game.png" alt="Custom PCB design">
-                <img src="own_project_documentation/osc_shock.png" alt="Oscilloscope — shock circuit">
+            <div class="image-grid single">
+                <img src="own_project_documentation/PCB_taser_game.png" alt="Taser Game custom PCB">
             </div>
 
             <h3>Embedded Software — RTOS</h3>
             <ul>
-                <li><strong>Protocol:</strong> NEC protocol (38kHz carrier, 67.5ms packet duration). Packets include PlayerID, Damage, and an 8-bit Timestamp for duplicate hit rejection</li>
-                <li><strong>Task architecture:</strong> FreeRTOS with dual-core task division — non-time-critical tasks on Core 0, all network tasks on Core 1</li>
-                <li><strong>Data integrity:</strong> Slaves maintain authoritative running totals. Master aggregates for eventual consistency. Strict MUTEX implementation prevents shared resource corruption</li>
+                <li><strong>Protocol:</strong> NEC protocol (38kHz carrier, 67.5ms packet duration) for reliable hit transmission. Packets include PlayerID, Damage, and an 8-bit Timestamp for duplicate hit rejection.</li>
+                <li><strong>Task Architecture:</strong> FreeRTOS handles concurrent tasks. The tasks are divided on the dual-core esp32-s3 to group all the tasks without strict timing needed on core 0, while network tasks are running on core 1.</li>
+                <li><strong>Data Integrity:</strong> Slaves maintain authoritative running totals of hits received. The master aggregates complete data, providing eventual consistency and correct scores even with intermittent connections. Strict MUTEX implementation in critical sections mean shared resources are never corrupted.</li>
             </ul>
 
             <h3>Tablet UI</h3>
-            <p>A tablet connects directly to the Master's web server with no app installation required. The interface provides game configuration (modes, team count, duration), a real-time global scoreboard during play showing kills, damage dealt, and team scores, and a final results screen highlighting top performers.</p>
+            <ul>
+                <li><strong>Interface:</strong> A tablet connects to the Master base station's web server.</li>
+                <li><strong>Features:</strong> Provides an easy user interface for game configuration (game modes, team count, duration). During the game, it displays a real-time global scoreboard showing Player Kills, Player Damage, and Team Scores. After the game it shows the final scoreboard and highlights the top performers.</li>
+            </ul>
             <div class="image-grid two-col ui-screenshots">
                 <img src="own_project_documentation/taser_game_UI.png" alt="Scoreboard UI">
                 <img src="own_project_documentation/taser_game_UI_team_deathmatch.png" alt="Team Deathmatch mode UI">
@@ -119,26 +123,26 @@
             <h2>Time Investment</h2>
             <table class="detail-table">
                 <tr><th>Phase</th><th>Hours (approx)</th></tr>
-                <tr><td>Research & system architecture</td><td>50</td></tr>
-                <tr><td>Manual assembly V1</td><td>30</td></tr>
-                <tr><td>PCB design & assembly V2</td><td>20</td></tr>
-                <tr><td>Embedded software V1 and V2</td><td>40</td></tr>
+                <tr><td>Research & System architecture</td><td>50</td></tr>
+                <tr><td>Manual assembly v1</td><td>30</td></tr>
+                <tr><td>PCB design & assembly v2</td><td>20</td></tr>
+                <tr><td>Embedded software development v1 and v2</td><td>40</td></tr>
                 <tr><td><strong>Total</strong></td><td><strong>140</strong></td></tr>
             </table>
         </section>
 
         <section class="glass-card detail-section">
             <h2>User Validation</h2>
-            <p>The V1 set was tested with a gymnastics team to evaluate shock magnitude, ease of use, and game mode logic.</p>
+            <p>The v1 set was tested with a gymnastics team to evaluate the shock magnitude, ease of use and game mode logic. The test yielded the following feedback from the users:</p>
             <ul>
-                <li><strong>Shock magnitude:</strong> Perceived as too high at the lowest setting, with no significant difference between medium and high. Linear duration parameters do not equate to linear pain perception. Fix: shorten the low-setting pulse, keep medium, extend high to differentiate more clearly</li>
-                <li><strong>Usability:</strong> Game mode logic was intuitive and worked without explanation. Tablet UI was easy to navigate</li>
+                <li>Shock magnitude is perceived as too high for the lowest selection and does not change significantly with the medium and high level. This shows that the linear duration parameters do not equate to linear pain perception. Fix: make the low setting a shorter shock duration. Keep medium duration and increase high duration to differentiate those more.</li>
+                <li>Use was intuitive and game mode logic worked. Tablet UI was easy to navigate.</li>
             </ul>
         </section>
 
         <section class="glass-card detail-section">
             <h2>Lessons Learned</h2>
-            <p>Manual assembly and retrofitting took much more time than anticipated. Many hours can be saved by designing a PCB earlier and planning for the least possible physical change when retrofitting an existing product — the V2 PCB proved this dramatically.</p>
+            <p>Manual assembly and retrofitting took much more time than anticipated -> Many hours can be saved by designing a PCB earlier and planning for least possible amount of physical change when retrofitting an existing product.</p>
         </section>
     </main>
 

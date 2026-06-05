@@ -1,33 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Image gallery / carousel
+    // Image/video gallery / carousel
     document.querySelectorAll('.gallery').forEach(gallery => {
-        const images = Array.from(gallery.querySelectorAll('.gallery-track img'));
-        if (images.length === 0) return;
+        const items = Array.from(gallery.querySelectorAll('.gallery-track img, .gallery-track video'));
+        if (items.length === 0) return;
 
         let current = 0;
 
         // Generate dots
         const footer = document.createElement('div');
         footer.className = 'gallery-footer';
-        const dots = images.map((_, i) => {
+        const dots = items.map((_, i) => {
             const dot = document.createElement('button');
             dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
-            dot.setAttribute('aria-label', 'Image ' + (i + 1));
+            dot.setAttribute('aria-label', 'Item ' + (i + 1));
             footer.appendChild(dot);
             return dot;
         });
 
-        if (images.length > 1) {
+        if (items.length > 1) {
             gallery.appendChild(footer);
         } else {
             gallery.querySelectorAll('.gallery-arrow').forEach(a => a.style.display = 'none');
         }
 
         function goTo(index) {
-            images[current].classList.remove('active');
+            const leaving = items[current];
+            if (leaving.tagName === 'VIDEO') leaving.pause();
+            leaving.classList.remove('active');
             dots[current].classList.remove('active');
-            current = (index + images.length) % images.length;
-            images[current].classList.add('active');
+            current = (index + items.length) % items.length;
+            items[current].classList.add('active');
             dots[current].classList.add('active');
         }
 

@@ -508,7 +508,8 @@ section {
     overflow: hidden;
 }
 
-.gallery-track img {
+.gallery-track img,
+.gallery-track video {
     display: none;
     width: 100%;
     max-height: 520px;
@@ -516,7 +517,8 @@ section {
     border-radius: 12px;
 }
 
-.gallery-track img.active {
+.gallery-track img.active,
+.gallery-track video.active {
     display: block;
     animation: galleryFade 0.25s ease;
 }

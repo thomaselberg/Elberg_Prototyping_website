@@ -1,0 +1,7 @@
+# Local project folders — not part of the website
+Business stuff/
+Own project folders/
+Client project folders/
+
+# Claude Code internal files
+.claude/

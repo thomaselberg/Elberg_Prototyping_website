@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bachelor's Thesis | Elberg Prototyping</title>
+    <meta name="description" content="Bachelor's thesis by Thomas Elberg — read the full academic report behind the engineering.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Thesis-specific styles scoped to this page */
+        .thesis-viewer {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pdf-container {
+            flex-grow: 1;
+            min-height: 80vh;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            background: rgba(0, 0, 0, 0.15);
+            margin-bottom: 2rem;
+        }
+
+        .pdf-container iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 80vh;
+            border: none;
+            display: block;
+        }
+
+        .thesis-header {
+            text-align: center;
+            padding: 3rem 5% 2rem;
+        }
+
+        .thesis-header h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+        }
+
+        .thesis-header p {
+            font-size: 1.15rem;
+            color: #e0f2fe;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .thesis-header .download-link {
+            display: inline-block;
+            color: var(--accent-2);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .thesis-header .download-link:hover {
+            opacity: 0.75;
+        }
+
+        /* Make the page fill full viewport height */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main.thesis-main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background dynamic elements -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <!-- Glassmorphism Navigation -->
+    <header class="glass-nav">
+        <div class="logo">
+            <a href="index.html">
+                <img src="ELBERG_PROTOTYPING_Logo_software_transparent.png" alt="Elberg Prototyping" class="logo-img">
+            </a>
+        </div>
+        <nav class="desktop-nav">
+            <a href="index.html#home" class="nav-link">Home</a>
+            <a href="projects.html" class="nav-link active">Our own projects</a>
+            <a href="index.html#about" class="nav-link">About us</a>
+            <a href="index.html#contact" class="cta-button">Contact</a>
+        </nav>
+    </header>
+
+    <main class="thesis-main">
+        <a href="projects.html" class="back-link">← Back to Projects</a>
+
+        <div class="thesis-header">
+            <h1>Bachelor's <span class="gradient-text">Thesis</span></h1>
+            <p>The full academic report by Thomas Elberg. Scroll through the pages below or download the PDF.</p>
+            <a href="Bachelors Thesis Thomas Elberg.pdf" download class="download-link">⬇ Download PDF</a>
+        </div>
+
+        <div class="thesis-viewer">
+            <div class="pdf-container">
+                <iframe src="Bachelors Thesis Thomas Elberg.pdf" title="Bachelor's Thesis by Thomas Elberg"></iframe>
+            </div>
+        </div>
+    </main>
+
+    <footer class="glass-footer">
+        <p>&copy; 2026 Elberg Prototyping</p>
+        <div class="footer-meta">
+            <span>CVR: 45085295</span>
+            <span>Aalborg, Denmark</span>
+            <span>Tlf: 5071 8212</span>
+            <a href="https://www.linkedin.com/in/thomas-elberg-nielsen-222236359" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

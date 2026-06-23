@@ -397,6 +397,14 @@ section {
     transform: translateX(5px);
 }
 
+.live-demo-link {
+    color: var(--accent-2);
+}
+
+.live-demo-link:hover {
+    opacity: 0.8;
+}
+
 /* Footer */
 .glass-footer {
     text-align: center;
